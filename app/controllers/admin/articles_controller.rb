@@ -37,7 +37,7 @@ class Admin::ArticlesController < ApplicationController
     if @article.update(article_params)
       @article.adjust_state
       @article.save
-  
+
       flash[:notice] = '更新しました'
       redirect_to edit_admin_article_path(@article.uuid)
     else
