@@ -25,7 +25,7 @@ class Admin::Articles::PublishesController < ApplicationController
       flash.now[:alert] = 'エラーがあります。確認してください。'
       @article.state = @article.state_was if @article.state_changed?
     end
-    
+
     render 'admin/articles/edit'
   end
 
