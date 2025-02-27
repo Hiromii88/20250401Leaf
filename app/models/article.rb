@@ -63,7 +63,7 @@ class Article < ApplicationRecord
   scope :new_arrivals, -> { viewable.order(published_at: :desc) }
   scope :by_category, ->(category_id) { where(category_id: category_id) }
   scope :title_contain, ->(word) { where('title LIKE ?', "%#{word}%") }
-  scope :past_published, ->{ where('published_at <= ?', Time.current) }
+  scope :past_published, -> { where('published_at <= ?', Time.current) }
 
   def build_body(controller)
     result = ''
@@ -93,12 +93,6 @@ class Article < ApplicationRecord
   end
 
   def adjust_state
-    if draft?
-      self.state = :draft
-    elsif published_at.present? && Time.current >= published_at
-      self.state = :published
-    else
-      self.state = :publish_wait
-    end
+    self.state = draft? ? :draft : (published_at.present? && Time.current >= published_at ? :published : :publish_wait)
   end
 end
