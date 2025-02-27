@@ -9,7 +9,7 @@ class DateTimePickerInput < SimpleForm::Inputs::Base
   def input_html_options
     classes = super[:class] || []
     classes << :'form-control'
-    super.merge(class: classes.uniq)
+    super.merge(class: classes.uniq, data: { stepping: 60, format: 'YYYY-MM-DD HH:00' })
   end
 
   def span_table
