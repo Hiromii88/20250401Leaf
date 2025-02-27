@@ -93,6 +93,12 @@ class Article < ApplicationRecord
   end
 
   def adjust_state
-    self.state = draft? ? :draft : (published_at.present? && Time.current >= published_at ? :published : :publish_wait)
+    if draft?
+      self.state = :draft
+    elsif published_at.present? && Time.current >= published_at
+      self.state = :published
+    else
+      self.state = :publish_wait
+    end
   end
 end
