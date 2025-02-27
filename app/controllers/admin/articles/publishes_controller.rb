@@ -21,13 +21,12 @@ class Admin::Articles::PublishesController < ApplicationController
         @article.body = @article.build_body(self)
         @article.save!
       end
-
-      render 'admin/articles/edit'
     else
       flash.now[:alert] = 'エラーがあります。確認してください。'
       @article.state = @article.state_was if @article.state_changed?
-      render 'admin/articles/edit'
     end
+    
+    render 'admin/articles/edit'
   end
 
   private
