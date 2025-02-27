@@ -8,10 +8,10 @@ class Admin::Articles::PublishesController < ApplicationController
       if @article.published_at.present?
         if Time.current >= @article.published_at
           @article.state = :published
-          flash[:notice] = '公開しました'
+          flash.now[:notice] = '公開しました'
         else
           @article.state = :publish_wait
-          flash[:notice] = '公開待ちにしました'
+          flash.now[:notice] = '公開待ちにしました'
         end
       else
         @article.state = :draft
@@ -22,7 +22,7 @@ class Admin::Articles::PublishesController < ApplicationController
         @article.save!
       end
 
-      redirect_to edit_admin_article_path(@article.uuid)
+      render 'admin/articles/edit'
     else
       flash.now[:alert] = 'エラーがあります。確認してください。'
       @article.state = @article.state_was if @article.state_changed?
