@@ -4,6 +4,9 @@ class SearchArticlesForm
 
   attribute :category_id, :integer
   attribute :title, :string
+  attribute :author_id, :integer
+  attribute :tag_id, array: :integer
+  attribute :body, :string
 
   def search
     relation = Article.distinct
@@ -12,6 +15,14 @@ class SearchArticlesForm
     title_words.each do |word|
       relation = relation.title_contain(word)
     end
+    relation = relation.by_author(author_id) if author_id.present?
+    relation = relation.by_tag(tag_id) if tag_id.present?
+    sentence_body_words.each do |word|
+      relation = relation.sentence_body_contain(word)
+    end
+
+    puts relation.to_sql
+
     relation
   end
 
@@ -19,5 +30,9 @@ class SearchArticlesForm
 
   def title_words
     title.present? ? title.split(nil) : []
+  end
+
+  def sentence_body_words
+    body.present? ? body.split : []
   end
 end
