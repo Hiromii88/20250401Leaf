@@ -13,9 +13,8 @@
             => f.select :category_id, Category.pluck(:name, :id) , { include_blank: 'カテゴリ' }, class: 'form-control'
             => f.select :author_id, Author.pluck(:name, :id) ,  { include_blank: '著者' }, class: 'form-control'
             => f.select :tag_id, Tag.pluck(:name, :id) , { include_blank: 'タグ', multiple: true }, class: 'form-control'
-
-            .input-group
-              = f.search_field :body, placeholder: '記事内容', class: 'form-control'
+            = f.search_field :body, placeholder: '記事内容', class: 'form-control'
+            
             .input-group
               = f.search_field :title, placeholder: 'タイトル', class: 'form-control'
               span.input-group-btn
