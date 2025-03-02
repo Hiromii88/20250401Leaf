@@ -20,9 +20,6 @@ class SearchArticlesForm
     sentence_body_words.each do |word|
       relation = relation.sentence_body_contain(word)
     end
-
-    puts relation.to_sql
-
     relation
   end
 

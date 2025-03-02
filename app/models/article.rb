@@ -64,13 +64,13 @@ class Article < ApplicationRecord
   scope :by_category, ->(category_id) { where(category_id: category_id) }
   scope :title_contain, ->(word) { where('title LIKE ?', "%#{word}%") }
   scope :past_published, -> { where('published_at <= ?', Time.current) }
-  scope :by_author, -> (author_id) { where(author_id: author_id) }
-  scope :by_tag, -> (tag_id) { joins(:tags).where( tags: {id: tag_id} ) }
-  scope :sentence_body_contain, ->(word) {
-  joins("LEFT JOIN article_blocks ON article_blocks.article_id = articles.id")
-  .joins("LEFT JOIN sentences ON sentences.id = article_blocks.blockable_id AND article_blocks.blockable_type = 'Sentence'")
-  .where('sentences.body LIKE ?', "%#{word}%")
-}
+  scope :by_author, ->(author_id) { where(author_id: author_id) }
+  scope :by_tag, ->(tag_id) { joins(:tags).where(tags: { id: tag_id }) }
+  scope :sentence_body_contain, lambda { |word|
+    joins('LEFT JOIN article_blocks ON article_blocks.article_id = articles.id')
+      .joins("LEFT JOIN sentences ON sentences.id = article_blocks.blockable_id AND article_blocks.blockable_type = 'Sentence'")
+      .where('sentences.body LIKE ?', "%#{word}%")
+  }
   def build_body(controller)
     result = ''
 
