@@ -64,7 +64,6 @@ class Article < ApplicationRecord
   scope :new_arrivals, -> { viewable.order(published_at: :desc) }
   scope :by_category, ->(category_id) { where(category_id: category_id) }
   scope :title_contain, ->(word) { where('title LIKE ?', "%#{word}%") }
-  scope :past_published, -> { where('published_at <= ?', Time.current) }
   scope :by_author, ->(author_id) { where(author_id: author_id) }
   scope :by_tag, ->(tag_id) { joins(:tags).where(tags: { id: tag_id }) }
   scope :body_contain, ->(word) { joins(:sentences).where('sentences.body LIKE ?', "%#{word}%") }
@@ -100,10 +99,10 @@ class Article < ApplicationRecord
   def adjust_state
     self.state = if draft?
                   :draft
-                elsif published_at.present? && Time.current >= published_at
+                 elsif published_at.present? && Time.current >= published_at
                   :published
-                else
+                 else
                   :publish_wait
-                end
+                 end
   end
 end
