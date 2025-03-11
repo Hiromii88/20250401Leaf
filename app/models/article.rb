@@ -46,6 +46,7 @@ class Article < ApplicationRecord
   validates :description, length: { maximum: 1000 }, allow_blank: true
   validates :state, presence: true
   validates :eye_catch, attachment: { purge: true, content_type: %r{\Aimage/(png|jpeg)\Z}, maximum: 10_485_760 }
+  validates :eyecatch_width, numericality: { only_integer: true, greater_than_or_equal_to: 100, less_than_or_equal_to: 700 }, allow_nil: true
 
   with_options if: :published? do
     validates :slug, slug_format: true, presence: true, length: { maximum: 255 }
@@ -66,11 +67,9 @@ class Article < ApplicationRecord
   scope :past_published, -> { where('published_at <= ?', Time.current) }
   scope :by_author, ->(author_id) { where(author_id: author_id) }
   scope :by_tag, ->(tag_id) { joins(:tags).where(tags: { id: tag_id }) }
-  scope :sentence_body_contain, lambda { |word|
-    joins('LEFT JOIN article_blocks ON article_blocks.article_id = articles.id')
-      .joins("LEFT JOIN sentences ON sentences.id = article_blocks.blockable_id AND article_blocks.blockable_type = 'Sentence'")
-      .where('sentences.body LIKE ?', "%#{word}%")
-  }
+  scope :body_contain, ->(word) { joins(:sentences).where('sentences.body LIKE ?', "%#{word}%") }
+  scope :past_published, -> { where('published_at <= ?', Time.current) }
+
   def build_body(controller)
     result = ''
 
@@ -100,11 +99,11 @@ class Article < ApplicationRecord
 
   def adjust_state
     self.state = if draft?
-                   :draft
-                 elsif published_at.present? && Time.current >= published_at
-                   :published
-                 else
-                   :publish_wait
-                 end
+                  :draft
+                elsif published_at.present? && Time.current >= published_at
+                  :published
+                else
+                  :publish_wait
+                end
   end
 end

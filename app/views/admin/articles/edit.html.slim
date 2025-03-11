@@ -25,10 +25,19 @@
           = f.input :title
           = f.input :slug
           = f.input :eye_catch, as: :file
-          - if @article.eye_catch.attached?
-            = image_tag @article.eye_catch_url(:thumb), class: 'img-thumbnail'
-            br
-            br
+
+          = image_tag @article.eye_catch_url(:thumb), class: 'img-thumbnail'
+          = f.input :eyecatch_width, label: "アイキャッチ幅", input_html: { placeholder: 100 }
+
+          = f.radio_button :image_alignment, 'float-start'
+          = f.label 'image_alignment_left', "左寄せ"
+
+          = f.radio_button :image_alignment, 'mx-auto d-block'
+          = f.label 'image_alignment_center', "中央寄せ"
+
+          = f.radio_button :image_alignment, 'float-right'
+          = f.label 'image_alignment_right', "右寄せ"
+
           = f.input :description, input_html: { class: 'js-autosize' }
           = f.input :author_id, as: :select2, collection: Author.pluck(:name, :id)
           = f.input :category_id, as: :select2, collection: Category.pluck(:name, :id)

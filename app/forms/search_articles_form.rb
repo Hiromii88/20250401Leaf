@@ -18,7 +18,7 @@ class SearchArticlesForm
     relation = relation.by_author(author_id) if author_id.present?
     relation = relation.by_tag(tag_id) if tag_id.present?
     sentence_body_words.each do |word|
-      relation = relation.sentence_body_contain(word)
+      relation = relation.body_contain(word)
     end
     relation
   end

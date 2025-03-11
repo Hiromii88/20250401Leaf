@@ -7,7 +7,8 @@
 
   - if article.eye_catch.attached?
     section.eye_catch
-      = image_tag article.eye_catch_url(:lg), class: 'img-fluid'
+      = image_tag article.eye_catch_url(:lg), class: "img-fluid #{@article.image_alignment}", width: @article.eyecatch_width
+      .clearfix
 
   - if article.category.present?
     section.category

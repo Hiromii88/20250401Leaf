@@ -41,6 +41,7 @@ ja:
         state: '状態'
         description: '概要'
         eye_catch: 'アイキャッチ'
+        eyecatch_width: 'アイキャッチ幅'
         category: 'カテゴリー'
         tag: 'タグ'
         author: '著者'
@@ -56,5 +57,10 @@ ja:
             password_confirmation:
               blank: 'パスワードを再入力してください'
               confirmation: 'パスワードが異なります'
+        article:
+          attributes:
+            eyecatch_width:
+              greater_than_or_equal_to: "アイキャッチ幅は100以上の値にしてください"
+              less_than_or_equal_to: "アイキャッチ幅は700以下の値にしてください"
 
 
