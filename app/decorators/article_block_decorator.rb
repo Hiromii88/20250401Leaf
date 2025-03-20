@@ -5,9 +5,10 @@ module ArticleBlockDecorator
     elsif medium?
       '<i class="fa fa-image"></i>'.html_safe
     elsif embed?
-      if embed_type == 'youtube'
+      case embed_type
+      when 'youtube'
         '<i class="fa fa-youtube-play"></i>'.html_safe
-      elsif embed_type == 'twitter'
+      when 'twitter'
         '<i class="fa fa-twitter"></i>'.html_safe
       end
     end
