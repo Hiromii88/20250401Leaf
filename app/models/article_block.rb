@@ -53,6 +53,10 @@ class ArticleBlock < ApplicationRecord
     blockable.is_a?(Embed)
   end
 
+  def embed_type
+    blockable.is_a?(Embed) ? blockable.embed_type : nil
+  end
+
   def insert_and_save!
     # levelをずらす
     article_blocks = article.article_blocks.where('level >= ?', level).reorder(level: :desc)
