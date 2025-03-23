@@ -17,4 +17,17 @@ module SiteDecorator
 
     command ? og_image.variant(command).processed : og_image
   end
+
+  def main_images_url(version = :origin)
+    return nil if !main_images.attached? || main_images.metadata.blank?
+
+    command = case version
+              when :ogp
+                { resize: '1200x400' }
+              else
+                false
+              end
+
+    command ? main_images.variant(command).processed : main_images
+  end
 end

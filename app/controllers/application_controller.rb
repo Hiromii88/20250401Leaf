@@ -8,6 +8,7 @@ class ApplicationController < ActionController::Base
   before_action :require_login
   before_action :current_site
   before_action :init_components
+  before_action :set_site
 
   def current_site
     @current_site ||= Site.first
@@ -54,5 +55,9 @@ class ApplicationController < ActionController::Base
       new_arrivals: true,
       categories: true
     }
+  end
+  
+  def set_site
+    @site = Site.first  # 例えば最初のサイトを設定する場合
   end
 end

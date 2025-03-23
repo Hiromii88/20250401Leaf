@@ -1,5 +1,16 @@
-header.jumbotron.jumbotron-fluid
-  .container
+header
+  .swiper
+    .swiper-wrapper
+      - if current_site.main_images.present?
+        - current_site.main_images.each do |image|
+          = image_tag url_for(image), class: 'swiper-slide'
+      - else
+        = image_tag '/images/cover.jpg', class: 'swiper-slide'
+
+      .swiper-pagination
+      .swiper-button-prev
+      .swiper-button-next
+
+  .container.blog_title
     h1 = link_to current_site.name, root_path
     p.lead = current_site.subtitle
-

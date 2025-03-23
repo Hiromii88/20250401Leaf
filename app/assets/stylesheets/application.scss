@@ -13,12 +13,20 @@
  *= require_self
  */
 
-.jumbotron {
-  background: url('/images/cover.jpg') center / cover;
-  color: white;
-
-  a {
+header{
+  .container.blog_title {
     color: white;
+  }
+
+  .swiper {
+    width: 100%;
+    height: 300px;
+  }
+
+  .swiper-slide {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 }
 

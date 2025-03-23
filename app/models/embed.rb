@@ -17,25 +17,8 @@ class Embed < ApplicationRecord
 
   validates :identifier, length: { maximum: 200 }
 
-  before_save :convert_embed_type_url
-
-  private
-
-  def convert_embed_type_url
-    return if identifier.blank?
-
-    case embed_type
-    when 'youtube'
-      if identifier.match(%r{\Ahttps://youtu\.be/([\w-]+)})
-        youtube_id = Regexp.last_match(1)
-        self.identifier = "https://www.youtube.com/embed/#{youtube_id}"
-      end
-    when 'twitter'
-      if identifier.match(%r{\Ahttps://x\.com/([\w-]+)/status/(\d+)})
-        username = Regexp.last_match(1)
-        tweet_id = Regexp.last_match(2)
-        self.identifier = "https://twitter.com/#{username}/status/#{tweet_id}"
-      end
-    end
+  def split_id_from_youtube_url
+    # YoutubeならIDのみ抽出
+    identifier.split('/').last if youtube?
   end
 end

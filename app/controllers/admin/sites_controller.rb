@@ -17,10 +17,29 @@ class Admin::SitesController < ApplicationController
     end
   end
 
+  def remove_image
+    authorize(@site)
+
+    case params[:image_type]
+    when 'favicon'
+      @site.favicon.purge
+    when 'og_image'
+      @site.og_image.purge
+    when 'main_images'
+      image_id = params[:image_id]
+      if image_id
+        image = @site.main_images.find(image_id)
+        image.purge
+      end
+    end
+
+    redirect_to edit_admin_site_path
+  end
+
   private
 
   def site_params
-    params.require(:site).permit(:name, :subtitle, :description, :favicon, :og_image)
+    params.require(:site).permit(:name, :subtitle, :description, :favicon, :og_image, main_images: [])
   end
 
   def set_site

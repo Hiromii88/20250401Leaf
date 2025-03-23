@@ -1,14 +1,4 @@
-ruby:
-  embed = local_assigns[:embed]
-  width = local_assigns[:width] || 853
-  height = local_assigns[:height] || 480
-
 .embed-twitter
   blockquote.twitter-tweet
-    | (ツイート埋め込み処理中)
-    a href="#{embed.identifier}" Tweet
-
-javascript:
-  twttr.ready(function () {
-    twttr.widgets.load();
-  });
+    a href="#{embed.identifier}"
+script async="" charset="utf-8" src="https://platform.twitter.com/widgets.js"
