@@ -56,8 +56,8 @@ class ApplicationController < ActionController::Base
       categories: true
     }
   end
-  
+
   def set_site
-    @site = Site.first  # 例えば最初のサイトを設定する場合
+    @site = Site.first
   end
 end
