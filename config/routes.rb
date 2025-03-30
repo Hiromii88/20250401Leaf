@@ -20,7 +20,7 @@ Rails.application.routes.draw do
       resource :register, only: %i[show create]
     end
     resource :site, only: %i[edit update] do
-      delete "remove_image", on: :member
+      resources :attachments, controller: 'site/attachments', only: %i[destroy]
     end
     resources :categories, only: %i[index create edit update destroy]
     resources :tags, only: %i[index create edit update destroy]

@@ -3,7 +3,7 @@ class SitePolicy < ApplicationPolicy
     user.admin?
   end
 
-  def remove_image?
+  def destroy?
     user.admin?
   end
 
