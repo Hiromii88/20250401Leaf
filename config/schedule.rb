@@ -32,6 +32,11 @@ set :environment, rails_env
 set :output, "#{Rails.root}/log/cron.log"
 
 #定期実行したい処理を記入
+#job_type :report_summary
+every day at '9:00 am' do
+  rails runner "ArticleMailer.report_summary.deliver_now"
+end
+
 every 1.hour do
   rake 'article_state:update_article_state'
 end
